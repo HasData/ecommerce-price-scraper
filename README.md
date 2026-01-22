@@ -137,7 +137,7 @@ price = Decimal("19.99") * Decimal("0.85")  # → 16.9915
 
 ## Disclaimer
 
-These scripts are for **educational purposes** only. Check our [legal guidance on web scraping](https://hasdata.com/blog/is-web-scraping-legal).
+These scripts are for **educational purposes** only. Check our [legal guidance on web scraping](https://hasdata.com/blog/is-web-scraping-legal?utm_source=github&utm_medium=syndication&utm_campaign=price-scraping).
 
 ## Notes
 
