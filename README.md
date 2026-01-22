@@ -148,6 +148,6 @@ These scripts are for **educational purposes** only. Check our [legal guidance o
 
 ## 📎 More Resources
 
-* Guide: [How to Scrape Prices with Python](https://hasdata.com/blog/price-scraping)
+* Guide: [How to Scrape Prices with Python](https://hasdata.com/blog/price-scraping?utm_source=github&utm_medium=syndication&utm_campaign=price-scraping)
 * Discord: [Join the community](https://discord.com/invite/QeuPtWpkAt)
 * Star this repo if helpful ⭐
