@@ -1,0 +1,12 @@
+# Core dependencies
+requests>=2.31.0
+beautifulsoup4>=4.12.0
+
+# Browser automation (optional - only for 05_api_interception.py)
+playwright>=1.40.0
+
+# Data handling
+python-decimal>=0.1.0
+
+# Development
+pytest>=7.4.0  # For running tests
