@@ -1,22 +1,24 @@
-![Python](https://img.shields.io/badge/python-3.11+-blue)
-
 # Price Scraping Toolkit
 
-[![HasData_bannner](banner.png)](https://hasdata.com/)
+![Python 3.11 or newer badge](https://img.shields.io/badge/python-3.11+-blue)
 
-A production-grade collection of Python scripts for extracting, normalizing, and monitoring e-commerce pricing data.
+[![HasData, the web scraping API behind the proxy and AI examples](banner.png)](https://hasdata.com/)
+
+Eight Python scripts for extracting, normalizing, and monitoring e-commerce pricing data. Each one is a standalone example around a single failure mode of price scraping.
 
 ## Features
 
 - **Multi-locale price normalization** (US/EU formats)
 - **Marketing noise removal** ("Was $X", "Save Y%")
 - **Currency detection** with geo-context
-- **Hierarchical selector strategies** (JSON-LD → microdata → CSS)
+- **Hierarchical selector strategies** (JSON-LD first, then microdata, then CSS)
 - **API interception** via Playwright
 - **AI-powered extraction** for complex layouts
 - **Price drop monitoring** with SQLite
 
 ## Project Structure
+
+The numbering follows the pipeline order.
 
 ```
 examples/
@@ -30,15 +32,25 @@ examples/
 └── 08_geo_pricing_audit.py      # Compare prices across regions
 ```
 
+Scripts 05 through 08 need either Playwright or an API key, the rest run offline.
+
 ## Quick Start
 
+Install once, then import any example as a module.
+
 ### Installation
+
+One requirements file, nothing global.
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### Example 1: Normalize International Prices
+Playwright users also run `playwright install chromium` once.
+
+### Normalizing International Prices
+
+The same function reads US and EU formats.
 
 ```python
 from decimal import Decimal
@@ -57,7 +69,11 @@ price_auto = normalize_price("1.234,56", locale_hint="AUTO")
 # → Decimal('1234.56') (detects EU from comma placement)
 ```
 
-### Example 2: Clean Marketing Noise
+AUTO mode reads the separator order instead of trusting a locale.
+
+### Cleaning Marketing Noise
+
+Deal pages bury the live price in was-now strings.
 
 ```python
 from examples.marketing_cleanup import extract_clean_price
@@ -67,7 +83,11 @@ clean_price = extract_clean_price(html)
 # → Decimal('99.99')
 ```
 
-### Example 3: Monitor Price Drops
+The cleaner keeps the last price in the string, which is the live one on deal layouts.
+
+### Monitoring Price Drops
+
+Two saves and a check is the whole loop.
 
 ```python
 from examples.price_monitoring import PriceTracker
@@ -82,7 +102,11 @@ if alert:
     # → "Price dropped 20.0%!"
 ```
 
+History lives in a local SQLite file, no service to run.
+
 ## Configuration
+
+Both settings sit at the top of the scripts.
 
 ### For HasData API Examples
 
@@ -92,6 +116,8 @@ Replace `YOUR_HASDATA_API_KEY` in scripts with your actual key:
 API_KEY = "YOUR_HASDATA_API_KEY"
 ```
 
+The key comes free with sign-up.
+
 ### For Geo-Pricing Audits
 
 Specify target markets in `08_geo_pricing_audit.py`:
@@ -100,7 +126,11 @@ Specify target markets in `08_geo_pricing_audit.py`:
 TARGET_REGIONS = ["US", "DE", "IN", "BR"]
 ```
 
+Each region resolves to a residential exit in that country.
+
 ## Use Cases
+
+Pick the script by the store you face.
 
 | Script | Best For | Key Technique |
 |--------|----------|---------------|
@@ -113,7 +143,11 @@ TARGET_REGIONS = ["US", "DE", "IN", "BR"]
 | `07_price_monitoring.py` | Deal alerts | Time-series analysis |
 | `08_geo_pricing_audit.py` | Price discrimination | Residential proxy rotation |
 
+The techniques compose, monitoring usually sits on top of one extractor.
+
 ## Important Notes
+
+One rule outranks the rest.
 
 ### Financial Precision
 Always use `Decimal` for price calculations, never `float`:
@@ -126,6 +160,8 @@ price = 19.99 * 0.85  # → 16.991499999999997
 from decimal import Decimal
 price = Decimal("19.99") * Decimal("0.85")  # → 16.9915
 ```
+
+The float error lands inside real invoices, which is why the rule has no exceptions.
 
 ## Tech Stack
 

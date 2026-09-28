@@ -1,8 +1,17 @@
+import importlib.util
+import pathlib
 import re
 from decimal import Decimal
 
-# Ensure you import normalize_price from the previous section
-# from normalization import normalize_price 
+# normalize_price lives in 01_price_normalization.py next to this file; the
+# numeric filename keeps the reading order, so it loads by path.
+_spec = importlib.util.spec_from_file_location(
+    "price_normalization",
+    pathlib.Path(__file__).with_name("01_price_normalization.py"),
+)
+_mod = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(_mod)
+normalize_price = _mod.normalize_price
 
 def extract_clean_price(html_snippet):
     """

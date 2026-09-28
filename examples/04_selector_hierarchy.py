@@ -1,3 +1,5 @@
+import time
+
 import requests
 from bs4 import BeautifulSoup
 from decimal import Decimal
@@ -6,7 +8,7 @@ import json
 
 # Configuration
 API_KEY = "YOUR_HASDATA_API_KEY"
-TARGET_URL = "https://demo.evershop.io/accessories/modern-ceramic-vase-green"
+TARGET_URL = "https://demo.nopcommerce.com/leica-t-mirrorless-digital-camera"
 
 def scrape_price_with_fallbacks():
     """
@@ -18,21 +20,25 @@ def scrape_price_with_fallbacks():
     """
     payload = {
         "url": TARGET_URL,
-        "proxyType": "residential", 
         "proxyCountry": "US",       # Ensures currency is in USD
         "jsRendering": True,        # Essential for modern React/Vue sites
         "outputFormat": ["html"]    # We want the raw HTML to parse locally
     }
 
     print(f"Fetching {TARGET_URL}...")
-    response = requests.post(
-        "https://api.hasdata.com/scrape/web",
-        headers={"x-api-key": API_KEY, "Content-Type": "application/json"},
-        json=payload,
-        timeout=30
-    )
-    
-    if response.status_code != 200:
+    # The demo store challenges some exit IPs, so one retry is part of the job.
+    for attempt in range(3):
+        response = requests.post(
+            "https://api.hasdata.com/scrape/web",
+            headers={"x-api-key": API_KEY, "Content-Type": "application/json"},
+            json=payload,
+            timeout=60
+        )
+        if response.status_code == 200:
+            break
+        print(f"  attempt {attempt + 1}: HTTP {response.status_code}, retrying")
+        time.sleep(3)
+    else:
         raise ConnectionError(f"API Error: {response.status_code}")
 
     # Use the 'html' field from HasData response

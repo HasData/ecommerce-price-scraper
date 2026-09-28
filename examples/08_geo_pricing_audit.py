@@ -109,7 +109,8 @@ print("-" * 30)
 
 for region in TARGET_REGIONS:
     price_display = get_price_from_region(region)
-    print(f"{region:6} | {str(price_display):20}")
+    shown = str(price_display) if price_display else "no price (challenge or layout variant)"
+    print(f"{region:6} | {shown:40}")
 
 
 # Example Output Logic:

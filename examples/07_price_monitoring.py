@@ -48,7 +48,7 @@ class PriceTracker:
         Returns an alert dict if the drop exceeds the threshold.
         """
         cursor = self.conn.execute(
-            "SELECT price FROM price_history WHERE url = ? ORDER BY scraped_at DESC LIMIT 2",
+            "SELECT price FROM price_history WHERE url = ? ORDER BY id DESC LIMIT 2",  # id, not the timestamp: same-second inserts share scraped_at
             (url,)
         )
         # Fetch latest two prices and convert back to Decimal for precise math
@@ -84,9 +84,10 @@ if __name__ == "__main__":
     # Simulated Scrape Event
     target_url = "https://demo.hyva.io/default/chaz-kangeroo-hoodie.html"
     
-    # Assume we scraped these values over time
-    # tracker.save(target_url, Decimal("249.99")) # Yesterday
-    tracker.save(target_url, Decimal("199.99"))   # Today (Sale)
+    # Two scrape events over time, the second one on sale
+    tracker.save(target_url, Decimal("249.99"))   # yesterday
+    tracker.save(target_url, Decimal("199.99"))   # today
+    print(f"Saved two price points for {target_url}")
 
     # Check for price drops
     alert = tracker.check_drop(target_url, threshold_percent=10)
@@ -94,3 +95,5 @@ if __name__ == "__main__":
         print(f"ALERT: Price dropped for {target_url}")
         print(f"Old: ${alert['previous']} | New: ${alert['current']}")
         print(f"Savings: ${alert['savings']} ({alert['discount']:.1f}% off)")
+    else:
+        print("No drop past the threshold in the stored history")
