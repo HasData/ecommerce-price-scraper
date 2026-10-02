@@ -2,7 +2,7 @@
 
 ![Python 3.11 or newer badge](https://img.shields.io/badge/python-3.11+-blue)
 
-[![HasData, the web scraping API behind the proxy and AI examples](banner.png)](https://hasdata.com/)
+[![HasData, the web scraping API behind the proxy and AI examples](banner.png)](https://hasdata.com/?utm_source=github&utm_medium=syndication&utm_campaign=price-scraping&utm_content=ecommerce-price-scraper-readme)
 
 Eight Python scripts for extracting, normalizing, and monitoring e-commerce pricing data. Each one is a standalone example around a single failure mode of price scraping.
 
@@ -173,7 +173,7 @@ The float error lands inside real invoices, which is why the rule has no excepti
 
 ## Disclaimer
 
-These scripts are for **educational purposes** only. Check our [legal guidance on web scraping](https://hasdata.com/blog/is-web-scraping-legal?utm_source=github&utm_medium=syndication&utm_campaign=price-scraping).
+These scripts are for **educational purposes** only. Check our [legal guidance on web scraping](https://hasdata.com/blog/is-web-scraping-legal?utm_source=github&utm_medium=syndication&utm_campaign=price-scraping&utm_content=ecommerce-price-scraper-readme).
 
 ## Notes
 
@@ -184,6 +184,6 @@ These scripts are for **educational purposes** only. Check our [legal guidance o
 
 ## 📎 More Resources
 
-* Guide: [How to Scrape Prices with Python](https://hasdata.com/blog/price-scraping?utm_source=github&utm_medium=syndication&utm_campaign=price-scraping)
+* Guide: [How to Scrape Prices with Python](https://hasdata.com/blog/price-scraping?utm_source=github&utm_medium=syndication&utm_campaign=price-scraping&utm_content=ecommerce-price-scraper-readme)
 * Discord: [Join the community](https://discord.com/invite/QeuPtWpkAt)
 * Star this repo if helpful ⭐
